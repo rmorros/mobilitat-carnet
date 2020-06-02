@@ -83,7 +83,7 @@ def func1(queue):
     #Loop for every video frame 
     filename=str(datetime.datetime.now())
     filename=filename.replace(":", "-")
-    results_file= open(f"./results-{filename}.txt","w+")
+    results_file= open(f"./LOGS/results-{filename}.txt","w+")
     results_file.write("0:00:00.000               ")
     results=queue.get()
     TITLE, frame, percentage = results[0], results[1], results[2]
@@ -112,8 +112,6 @@ def func1(queue):
                     percentage=0
                     h=0
                 aux_TITLE=TITLE
-            if frame%BlockDuration !=0:
-                results[2] = results[2]*(frame%BlockDuration)/BlockDuration
             percentage+=results[2]
 
         #Reshape the image for display depending on its aspect ratio
@@ -131,16 +129,14 @@ def func1(queue):
         cv2.imshow("frame", orig_frame)
 
         #Wait the corresponding ms (to maintain original FPS) and exit with 'q'
-        if cv2.waitKey(ms) & 0xFF == ord('q'):
+        if cv2.waitKey(1) & 0xFF == ord('q'):
             break
         j+=1
     
     video.release()
     cv2.destroyAllWindows()
-    if frame%BlockDuration !=0:
-        h += h*(frame%BlockDuration)/BlockDuration
-    else:
-        h+=1
+
+    h+=1
     percentage = percentage/h
     timestamp1 = str(datetime.timedelta(seconds=round(float(j/fps), 3)))
     if "." in timestamp1:
