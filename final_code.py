@@ -16,13 +16,14 @@ from multiprocessing import Queue
 from torchvision.models import vgg16
 import datetime
 
-
+#read video and useful data
 VIDEO_PATH = str(sys.argv[1])
 video = cv2.VideoCapture(VIDEO_PATH)
 fps = video.get(cv2.CAP_PROP_FPS)
 ms = int(1000/fps)
 BlockDuration = int(sys.argv[2])
 
+#create results list
 result_list=["unknown", 0, 0]
 
 
@@ -39,7 +40,6 @@ if not torch.cuda.is_available():
 device = torch.device("cuda:0")
 
 imgsize = 150
-
 transform = transforms.Compose(
     [transforms.Resize(int(imgsize)),  # Resize the short side of the image to 150 keeping aspect ratio
      transforms.CenterCrop(int(imgsize)),  # Crop a square in the center of the image
@@ -48,6 +48,7 @@ transform = transforms.Compose(
 
 classes = ('BikeBi', 'BikeU', 'Crosswalk', 'Road', 'Sidewalk')
 
+#load and prepare pretrained model
 pretrained_model = vgg16(pretrained=True)
 pretrained_model.eval()
 pretrained_model.to(device)
@@ -61,7 +62,6 @@ for layer in feature_extractor[:24]:  # Freeze layers 0 to 23
 for layer in feature_extractor[24:]:  # Train layers 24 to 30
     for param in layer.parameters():
         param.requires_grad = True
-
 
 model = nn.Sequential(
         feature_extractor,
@@ -80,26 +80,32 @@ MODEL_PATH = ".\Models\model.pth"
 model.load_state_dict(torch.load(MODEL_PATH))
 
 def func1(queue):
-    #Loop for every video frame 
+    #create .txt file for results log
     filename=str(datetime.datetime.now())
     filename=filename.replace(":", "-")
     results_file= open(f"./LOGS/results-{filename}.txt","w+")
     results_file.write("0:00:00.000               ")
+
+    #read results from analysis (on the other thread)
     results=queue.get()
     TITLE, frame, percentage = results[0], results[1], results[2]
-    print(f"{frame}")
+
     j=0
     h=0
     aux_TITLE = " "
+
+    #Loop for every video frame 
     while True:
         ret, orig_frame = video.read()
         if not ret:
             break
-            
+
         if j==frame:
             h+=1
             results=queue.get()
             TITLE, frame = results[0], results[1]
+
+            #if the detected class differs from the previous one:
             if aux_TITLE != TITLE:
                 if aux_TITLE != " ":
                     percentage = percentage/h
@@ -129,13 +135,14 @@ def func1(queue):
         cv2.imshow("frame", orig_frame)
 
         #Wait the corresponding ms (to maintain original FPS) and exit with 'q'
-        if cv2.waitKey(1) & 0xFF == ord('q'):
+        if cv2.waitKey(ms) & 0xFF == ord('q'):
             break
         j+=1
     
     video.release()
     cv2.destroyAllWindows()
 
+    #print the time and probability of the final prediction
     h+=1
     percentage = percentage/h
     timestamp1 = str(datetime.timedelta(seconds=round(float(j/fps), 3)))
@@ -144,6 +151,7 @@ def func1(queue):
     else:
         timestamp1+=str(".000")
     results_file.write(f"{timestamp1}               {aux_TITLE}\t\t{round(percentage, 2)}%")
+
     results_file.close()
     print ('Video Finished')
 
@@ -165,7 +173,6 @@ def func2(queue):
         ret, orig_frame = video.read()
         if ret:
             #Transform the image to input it to the model
-            #orig_frame = cv2.cvtColor(orig_frame, cv2.COLOR_BGR2RGB)
             orig_frame_PIL = Image.fromarray(orig_frame)
             image = image_loader(orig_frame_PIL)
             outputs=model(image)
@@ -178,6 +185,7 @@ def func2(queue):
             i+=1
             
         if (i%BlockDuration==0) | (not ret):  
+            #print results every block
             total=bikebi+crosswalk+bikeu+road+sidewalk
             print(f"Probability of BikeBi: {round(float(bikebi/total)*100, 3)}%")
             print(f"Probability of BikeU: {round(float(bikeu/total)*100, 3)}%")
@@ -189,6 +197,7 @@ def func2(queue):
 
             _, predicted = torch.max(outputs, 1)
 
+            #predicted block
             if bikeu > bikebi and bikeu > sidewalk and bikeu > road and bikeu>crosswalk:
                 predicted_block="BikeU"
                 prediction_percentage = round(float(bikeu/total)*100, 3)
@@ -233,6 +242,7 @@ def func2(queue):
 
 queue = Queue()
 
+#main
 if __name__=='__main__':
     p1 = Process(target=func1, args=(queue,))
     p1.start()
