@@ -13,8 +13,6 @@ from torchvision import datasets
 
 import matplotlib.pyplot as plt
 from torchvision import transforms
-from sklearn.manifold import TSNE
-from sklearn.decomposition import PCA
 from torchvision.models import vgg16
 
 
