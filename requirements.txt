@@ -1,0 +1,14 @@
+Cython == 0.29.15
+h5py == 2.10.0
+imutils == 0.5.3
+numpy == 1.18.2
+opencv-contrib-python == 4.2.0.32
+requests == 2.23.0
+scipy == 1.4.1
+setuptools == 46.0.0
+tensorflow-gpu == 1.13.1
+wheel == 0.34.2
+yolo34py-gpu == 0.1rc12
+keras == 2.2.5
+pillow == 6.1.0
+matplotlib == 3.2.1

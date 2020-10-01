@@ -1,0 +1,17 @@
+#  Ignore weights  #
+###################
+*.weights
+
+# Ignore tracking RE3 weights #
+###################
+*.pyc
+**/__pycache__
+/Tracker/logs
+
+#  Ignore .png images and .mp4 videos #
+###################
+*.mp4
+*.png
+
+# Ignore all new out files #
+out/*
