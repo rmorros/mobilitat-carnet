@@ -25,7 +25,7 @@ The project currently does contains two modules, which have been developed indep
   All the information for both modules can be find inside each directory.
   
 ## Developers:
-  - [Esteve Valls Mascaro] (https://github.com/Evm7)
+  - [Esteve Valls Mascaro](https://github.com/Evm7)
   - Jordi Fabregat Bosch
   - Julio González López
   
