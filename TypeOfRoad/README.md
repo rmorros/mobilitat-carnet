@@ -32,9 +32,16 @@ Create virtual environment and use the requirements.txt for the correct versions
 pip install -r requirements.txt
 ```
 ## Usage:
-   - Training :
-   
-   - Testing : 
+   - Training : all the dataset to train need to be placed inside the directory ['ModelTrain/processed_datalab'] (/TrainingScript.py#L30)
+```
+python3 TrainingScript.py
+```
+- Testing : there is only need to introduce
+   -  The path to the video the model has to be tested in
+   -  The blocksize, which is the number of frames the results is averaged in to create a more reliable classification (default as 120).
+```
+python final_code.py [path_to_video.mp4] [blocksize]
+```
 ## Results
 After fine-tuning our CNN VGG16 with the previously annotated videos (Training), we have evalutated the final model and obtained a great result with all accuracies higher than 89%. 
 
