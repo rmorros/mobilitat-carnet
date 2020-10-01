@@ -20,7 +20,7 @@ The project currently does contains two modules, which have been developed indep
   - [LANE RECOGNITION](/TypeOfRoad)
   
  Moreover, it also contains a tool integrally developed by our team which was used for the annotation of the videos:
-  - [ANNOTATION TOOL](/AnnotationTool)
+  - [ANNOTATION TOOL](/AnntotationTool)
   
   All the information for both modules can be find inside each directory.
   
