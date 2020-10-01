@@ -1,0 +1,1 @@
+#This desktop needs to be created in order to store the processed videos with its corresponding configuration files.
