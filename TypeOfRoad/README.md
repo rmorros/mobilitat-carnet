@@ -49,5 +49,5 @@ The confusion matrix presents a really high heat distribution on the diagonal, m
 every class is generally correctly predicted, with the worst results on the road class, that
 shows some confusion with the BikeBi, but is still less than a 10%.
 
-![alt Confussion Mattrix](images/confussion_mattrix.png)
+![alt Confussion Mattrix](mattrix_confussion.jpg)
 
