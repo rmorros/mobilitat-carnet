@@ -19,6 +19,9 @@ The project currently does contains two modules, which have been developed indep
   - [DETECTION OF STATIC AND DYNAMIC OBJECTS](/DynamicStaticHazards)
   - [LANE RECOGNITION](/TypeOfRoad)
   
+ Moreover, it also contains a tool integrally developed by our team which was used for the annotation of the videos:
+  - [ANNOTATION TOOL](/AnnotationTool)
+  
   All the information for both modules can be find inside each directory.
   
 ## Developers:
