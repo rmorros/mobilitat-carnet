@@ -1,7 +1,7 @@
 Cython == 0.29.15
 h5py == 2.10.0
 imutils == 0.5.3
-numpy == 1.18.2
+numpy == 1.22
 opencv-contrib-python == 4.2.0.32
 requests == 2.23.0
 scipy == 1.4.1
