@@ -6,7 +6,8 @@ opencv-contrib-python == 4.2.0.32
 requests == 2.23.0
 scipy == 1.4.1
 setuptools == 46.0.0
-tensorflow-gpu == 1.13.1
+#tensorflow-gpu == 1.13.1
+tensorflow-gpu == 2.7.1
 wheel == 0.34.2
 yolo34py-gpu == 0.1rc12
 keras == 2.2.5
