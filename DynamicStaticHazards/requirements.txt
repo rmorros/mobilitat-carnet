@@ -11,5 +11,5 @@ tensorflow-gpu == 2.7.2
 wheel == 0.34.2
 yolo34py-gpu == 0.1rc12
 keras == 2.2.5
-pillow == 9.0.1
+pillow == 9.3.0
 matplotlib == 3.2.1
