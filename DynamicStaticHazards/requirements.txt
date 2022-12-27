@@ -8,8 +8,8 @@ scipy == 1.4.1
 setuptools == 46.0.0
 #tensorflow-gpu == 1.13.1
 #tensorflow-gpu == 2.7.2
-tensorflow-gpu == 2.8.4
-wheel == 0.34.2
+tensorflow-gpu == 2.9.3
+wheel == 0.38.1
 yolo34py-gpu == 0.1rc12
 keras == 2.2.5
 pillow == 9.3.0
