@@ -2,5 +2,5 @@ imutils == 0.5.3
 numpy == 1.21
 opencv-contrib-python == 4.2.0.32
 python == 3.7.7
-setuptools == 48.1.1
+setuptools == 65.5.1
 wheel == 0.38.1
